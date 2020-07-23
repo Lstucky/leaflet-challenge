@@ -89,26 +89,28 @@ d3.json(baseURL, function(earthquakeData) {
     }
 
     // set legend control on bottom left
-    var legend = L.control({position: 'bottomleft'});
+    var legend = new L.Control({position: 'bottomleft'});
 
     // Create div element with 'info legend' class
     legend.onAdd = function (map) {
         var div = L.DomUtil.create('div', 'info legend'),
             scale = [0, 1, 2, 3, 4, 5]
             labels = [];
-    
+        
         // loop through our scale intervals and generate a label with a colored square for each interval
         for (var i = 0; i < scale.length; i++) {
             div.innerHTML +=
                 '<i style="background:' + getColor(scale[i] + 1) + '"></i> ' +
                 scale[i] + (scale[i + 1] ? '&ndash;' + scale[i + 1] + '<br>' : '+');
         }
-        div.innerHTML = labels.join('<br>');
+        console.log(div)
         return div;
     };
+    
+legend.addTo(myMap);
 
     // Create layer control and pass in basemaps, overlaymap, and legend to map
-    L.control.layers(baseMaps, overLayMaps, legend, {
+    L.control.layers(baseMaps, overLayMaps, {
         collapsed: false
     }).addTo(myMap);
 
